@@ -5,12 +5,19 @@ https://blog.csdn.net/renjianhhong/article/details/72844622
 
 用到的框架：
 UI—-面向对象
+
 数据交互—-MVP模式 
+
 数据库——GreenDao 
+
 网络图片加载—–picasso 
+
 json解析—–gson 
+
 http请求—-OKHttp 
+
 事件总线—-eventbus
+
 
 包的简介
 bean——————存放Java model对象 
