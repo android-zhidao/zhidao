@@ -6,7 +6,6 @@
 
     <include layout="@layout/common_title"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -62,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="注册"
+            android:text="注       册"
             android:id="@+id/go_register"
             android:textSize="12dp"
             android:textIsSelectable="false"

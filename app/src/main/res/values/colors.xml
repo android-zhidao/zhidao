@@ -14,4 +14,6 @@
     <color name="translucent">#00000000</color>
     <color name="gray">#eeeeee</color>
     <color name="gain_code">#ff9933</color>
+    <color name="home_bule1">#012742</color>
+    <color name="home_bule2">#00C7B7</color>
 </resources>

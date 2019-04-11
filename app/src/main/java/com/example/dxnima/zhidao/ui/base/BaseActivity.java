@@ -54,7 +54,6 @@ public abstract class BaseActivity extends Activity implements CreateInit, Publi
         initViews();
         initListeners();
         initData();
-        //setHeader();
         ZDApplication.zdApplication.addActivity(this);
         EventBus.getDefault().register(this);
     }
@@ -69,6 +68,7 @@ public abstract class BaseActivity extends Activity implements CreateInit, Publi
         right = (TextView) findViewById(R.id.tv_right);
         back.setOnClickListener(this);
     }
+
 
     /**
      * 点击事件

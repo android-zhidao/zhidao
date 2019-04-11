@@ -1,7 +1,5 @@
 package com.example.dxnima.zhidao.biz.personcenter;
 
-import android.util.Log;
-
 import com.example.dxnima.zhidao.ZDApplication;
 import com.example.dxnima.zhidao.bean.table.User;
 import com.example.dxnima.zhidao.biz.BasePresenter;
@@ -10,14 +8,11 @@ import com.example.dxnima.zhidao.bridge.Bridges;
 import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefManager;
 import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefUser;
 import com.example.dxnima.zhidao.bridge.http.OkHttpManager;
-import com.example.dxnima.zhidao.bridge.security.SecurityManager;
 import com.example.dxnima.zhidao.capabilities.http.ITRequestResult;
 import com.example.dxnima.zhidao.capabilities.http.Param;
 import com.example.dxnima.zhidao.constant.URLUtil;
 import com.example.dxnima.zhidao.dao.DaoSession;
-import com.example.dxnima.zhidao.dao.UserDao;
-
-import java.util.List;
+import com.example.dxnima.zhidao.util.GeneralUtils;
 
 /**
  *用户相关方法实现层
@@ -26,6 +21,7 @@ import java.util.List;
  */
 public class UserPresenter extends BasePresenter<IUserLoginView> {
 
+    GeneralUtils generalUtils=new GeneralUtils();
     public UserPresenter() {
     }
 
@@ -33,21 +29,61 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
     //网络层登陆实现
     public void loginInternet(String username, String password) {
-
-        //网络层
         mvpView.showLoading();
-        SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
+        //SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
         OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
-
-        httpManager.requestAsyncPostByTag(URLUtil.USER_LOGIN, getName(), new ITRequestResult<UserPresenter>() {
+        if (username=="" || password==""){
+            mvpView.onError("不能为空！","");
+        }
+        else
+        httpManager.requestAsyncPostByTag(URLUtil.USER_LOGIN, getName(), new ITRequestResult<User>() {
                     @Override
                     public void onCompleted() {
                         mvpView.hideLoading();
                     }
 
                     @Override
-                    public void onSuccessful(UserPresenter entity) {
+                    public void onSuccessful(User entity) {
+                        String s=entity.getUsername();
                         mvpView.onSuccess("登陆成功！", "");
+                        EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
+                        manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "");
+                    }
+                    @Override
+                    public void onFailure(String errorMsg) {
+                        mvpView.onError(errorMsg, "");
+                    }
+
+                }, User.class, new Param("username", username),
+                new Param("password",password));
+
+
+    }
+
+    //注册网络层
+    public void registerInternet(String username,String password,String email){
+        mvpView.showLoading();
+        //SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
+        OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
+        if (username=="" || password==""){
+            mvpView.onError("不能为空！","");
+        }
+        else if (!generalUtils.IsPassword(password)){
+            mvpView.onError("密码长度不够!","");
+        }
+        else if(!generalUtils.isEmail(email)){
+            mvpView.onError("邮箱格式不正确！","");
+        }
+        else
+        httpManager.requestAsyncPostByTag(URLUtil.USER_REGISTER,getName(),new ITRequestResult<User>() {
+                    @Override
+                    public void onCompleted() {
+                        mvpView.hideLoading();
+                    }
+
+                    @Override
+                    public void onSuccessful(User entity) {
+                        mvpView.onSuccess("注册成功！","");
                         EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
                         manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "abc");
                     }
@@ -57,12 +93,11 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
                         mvpView.onError(errorMsg, "");
                     }
 
-                }, UserPresenter.class, new Param("username", username),
-                new Param("password",securityManager.get32MD5Str(password)));
-
-
+                }, User.class, new Param("username", username),
+                new Param("password", password),new Param("email",email));
     }
 
+   /**
     //本地数据库登陆实现
     public void loginDatabase(String username, String password) {
         mvpView.showLoading();
@@ -103,37 +138,11 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
                 }
             }
             if (flag == 0) {
-                User user2 = new User(username,password);
+                User user2 = new User(null,username,password,email);
                 userDao.insert(user2);
                 mvpView.onSuccess("注册成功！", "");
             }
         }
     }
-
-    //注册网络层
-    public void registerInternet(String username,String password,String email){
-        mvpView.showLoading();
-        SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
-        OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
-        httpManager.requestAsyncPostByTag(URLUtil.USER_REGISTER,getName(),new ITRequestResult<UserPresenter>() {
-                    @Override
-                    public void onCompleted() {
-                        mvpView.hideLoading();
-                    }
-
-                    @Override
-                    public void onSuccessful(UserPresenter entity) {
-                        mvpView.onSuccess("注册成功！","");
-                        EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
-                        manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "abc");
-                    }
-
-                    @Override
-                    public void onFailure(String errorMsg) {
-                        mvpView.onError(errorMsg, "");
-                    }
-
-                }, UserPresenter.class, new Param("username", username),
-                new Param("password", securityManager.get32MD5Str(password)),new Param("email",email));
-    }
+    **/
 }

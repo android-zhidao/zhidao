@@ -1,5 +1,6 @@
 package com.example.dxnima.zhidao.ui.personcenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -112,13 +113,15 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                mUserPresenter.loginDatabase(userName.getText().toString(), password.getText().toString());//登陆
+                //mUserPresenter.loginInternet(userName.getText().toString(), password.getText().toString());//登陆
+                startActivity(HomeActivity.class,null);
                 break;
             case R.id.go_register:
                 startActivity(RegisterActivity.class,null);//点击注册跳转注册界面
                 break;
             case R.id.go_updatepassword:
                 startActivity(UpdatepsdActivity.class,null);//点击修改密码跳转修改密码界面
+                break;
         }
         super.onClick(v);
     }
@@ -140,7 +143,12 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
     @Override
     public void onSuccess(String errorMsg, String code) {
         //成功打开新界面homeactivity 主界面
-        startActivity(HomeActivity.class,null);
+        Intent intent = new Intent(this,HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//关掉所要到的界面中间的 activity
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//设置不要刷新将要跳转的界面
+        startActivity(intent);
+        this.finish();
+        //startActivity(HomeActivity.class,null);
     }
 
     @Override

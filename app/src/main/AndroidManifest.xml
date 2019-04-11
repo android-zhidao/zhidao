@@ -28,6 +28,10 @@
         </activity>
         <activity android:name=".ui.personcenter.UpdatepsdActivity">
         </activity>
+        <activity android:name=".ui.personcenter.SendmsgActivity">
+        </activity>
+        <activity android:name=".ui.personcenter.SettingActivity">
+        </activity>
     </application>
 
 </manifest>

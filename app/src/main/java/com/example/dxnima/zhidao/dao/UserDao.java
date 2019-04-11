@@ -24,8 +24,10 @@ public class UserDao extends AbstractDao<User, Void> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Username = new Property(0, String.class, "username", false, "USERNAME");
-        public final static Property Password = new Property(1, String.class, "password", false, "PASSWORD");
+        public final static Property Userid = new Property(0, Integer.class, "userid", false, "USERID");
+        public final static Property Username = new Property(1, String.class, "username", false, "USERNAME");
+        public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
+        public final static Property Email = new Property(3, String.class, "email", false, "EMAIL");
     };
 
 
@@ -41,8 +43,10 @@ public class UserDao extends AbstractDao<User, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
-                "\"USERNAME\" TEXT," + // 0: username
-                "\"PASSWORD\" TEXT);"); // 1: password
+                "\"USERID\" INTEGER," + // 0: userid
+                "\"USERNAME\" TEXT," + // 1: username
+                "\"PASSWORD\" TEXT," + // 2: password
+                "\"EMAIL\" TEXT);"); // 3: email
     }
 
     /** Drops the underlying database table. */
@@ -55,14 +59,24 @@ public class UserDao extends AbstractDao<User, Void> {
     protected final void bindValues(DatabaseStatement stmt, User entity) {
         stmt.clearBindings();
  
+        Integer userid = entity.getUserid();
+        if (userid != null) {
+            stmt.bindLong(1, userid);
+        }
+ 
         String username = entity.getUsername();
         if (username != null) {
-            stmt.bindString(1, username);
+            stmt.bindString(2, username);
         }
  
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(2, password);
+            stmt.bindString(3, password);
+        }
+ 
+        String email = entity.getEmail();
+        if (email != null) {
+            stmt.bindString(4, email);
         }
     }
 
@@ -70,14 +84,24 @@ public class UserDao extends AbstractDao<User, Void> {
     protected final void bindValues(SQLiteStatement stmt, User entity) {
         stmt.clearBindings();
  
+        Integer userid = entity.getUserid();
+        if (userid != null) {
+            stmt.bindLong(1, userid);
+        }
+ 
         String username = entity.getUsername();
         if (username != null) {
-            stmt.bindString(1, username);
+            stmt.bindString(2, username);
         }
  
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(2, password);
+            stmt.bindString(3, password);
+        }
+ 
+        String email = entity.getEmail();
+        if (email != null) {
+            stmt.bindString(4, email);
         }
     }
 
@@ -89,16 +113,20 @@ public class UserDao extends AbstractDao<User, Void> {
     @Override
     public User readEntity(Cursor cursor, int offset) {
         User entity = new User( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // username
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // password
+            cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // userid
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // username
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // password
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // email
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
-        entity.setUsername(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setPassword(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setUserid(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
+        entity.setUsername(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setPassword(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setEmail(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override

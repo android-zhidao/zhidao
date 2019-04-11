@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-              android:weightSum="1">
-
+              android:weightSum="1"
+    android:background="@color/gray">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="535dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.58">
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/gray">
 
         <SearchView
             android:layout_width="match_parent"
@@ -19,20 +18,18 @@
             android:background="@drawable/searchview_shape"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:queryHint="Search"/>
+            android:queryHint="Search"
+            android:clickable="true"/>
 
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listMsg"
+            android:background="@color/gray"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/searchView"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_weight="0.52">
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            layout="@layout/common_menu"/>
-    </LinearLayout>
 
 </LinearLayout>

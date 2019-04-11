@@ -47,6 +47,8 @@ public class OkHttpUtil {
 
     public final int READ_TIMEOUT = 20;
 
+    public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
+
     /**
      * 请求url集合
      */
@@ -457,25 +459,32 @@ public class OkHttpUtil {
         public void  onResponse(Response response) throws IOException {
             if (!isHaveActivtyName(activityName)) return;
             if (response.isSuccessful()) {
-                String result = response.body().string(); //方法只能调用一次
-                EBLog.i(TAG, result);
-                final T res = GsonHelper.toType(result, clazz);
-                int code = -1;
-                if (res != null && res instanceof BaseResp) {
-                    code = ((BaseResp) res).getRetcode();
-                    switch (code) {
-                        case 000000:
-                            postSucessMsg(res);
-                            break;
-                        case 10005:
-                        case 10011:
-                            //自动登录
-                        default:
-                            notifyMsg = ((BaseResp) res).getRetinfo();
-                            postErrorMsg();
-                            break;
+                try {
+                    String result = response.body().string(); //方法只能调用一次
+                    EBLog.i(TAG, result);
+                    final T res = GsonHelper.toType(result, clazz);//json数据转类对象
+                    final T resData = ((BaseResp<T>) res).getData();//json数据中data数据对象
+                    int code = -1;
+                    if (res != null && res instanceof BaseResp) {
+                        code = ((BaseResp) res).getStatus();
+                        switch (code) {
+                            case 0://success
+                                postSucessMsg(resData);//返回json中 data数据对象
+                                break;
+                            case 1://error
+                            case 2://需要注册
+                            case 10://需要登陆
+                            default:
+                                notifyMsg = ((BaseResp) res).getMsg();
+                                postErrorMsg();
+                                break;
+                        }
+                    } else {
+                        notifyMsg = SERVER_ERROR;
+                        postErrorMsg();
                     }
-                } else {
+                }
+                catch (IOException e){
                     notifyMsg = SERVER_ERROR;
                     postErrorMsg();
                 }

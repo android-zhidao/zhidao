@@ -4,34 +4,54 @@ package com.example.dxnima.zhidao.bean;
  * <网络请求返回体>
  * Created by DXnima on 2019/4/1.
  */
-public class BaseResp {
+public class BaseResp<T> {
     /**
      * 返回状态码
      */
-    protected int retcode;
+    protected Integer status;
 
     /**
-     * 返回信息描述
+     * data 数据体
      */
-    protected String retinfo;
+    protected T data;
 
-    public int getRetcode()
+    protected String msg;
+
+    protected String success;
+
+    public Integer getStatus()
     {
-        return retcode;
+        return status;
     }
 
-    public void setRetcode(int retcode)
+    public void setStatus(Integer status)
     {
-        this.retcode = retcode;
+        this.status = status;
     }
 
-    public String getRetinfo()
+    public T getData()
     {
-        return retinfo;
+        return data;
     }
 
-    public void setRetinfo(String retinfo)
+    public void setData(T data)
     {
-        this.retinfo = retinfo;
+        this.data = data;
+    }
+
+    public String getMsg(){
+        return msg;
+    }
+
+    public void setMsg(String msg){
+        this.msg=msg;
+    }
+
+    public String getSuccess(){
+        return success;
+    }
+
+    public void setSuccess(String success){
+        this.success=success;
     }
 }

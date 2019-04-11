@@ -24,4 +24,5 @@ public interface CreateInit {
      * 初始化公共头部
      */
     public void setHeader();
+
 }
