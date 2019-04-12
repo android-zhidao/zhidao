@@ -1,14 +1,12 @@
 package com.example.dxnima.zhidao.ui.personcenter;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.SearchView;
-import android.widget.TextView;
 
 import com.example.dxnima.zhidao.R;
 import com.example.dxnima.zhidao.biz.personcenter.IMsgView;
@@ -16,22 +14,27 @@ import com.example.dxnima.zhidao.biz.personcenter.MsgPresenter;
 import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
- * 消息页面
+ * 主页面
+ * 对应xml:activity_home.xml
  * Created by DXnima on 2019/4/1.
  */
 public class HomeActivity extends BaseActivity implements IMsgView{
 
+    //定义fragment
+    private MypageFragment mypageFragment;
+    private MainFragment mainFragment;
+    // 定义FragmentManager对象管理器
+    private FragmentManager fragmentManager;
+
+    /**
+     *
+     * 底部栏控件
+     * */
     private RadioButton home_msg,home_my;
 
-    private ImageView home_sendmsg,mypage_image;
+    private ImageView home_sendmsg;
 
     private FrameLayout fragment_container;
-
-    private SearchView searchView;
-
-    private ListView listMsg;
-
-    private TextView mypage_setting,mypage_user;
 
     private MsgPresenter mMsgPresenter;
 
@@ -46,6 +49,8 @@ public class HomeActivity extends BaseActivity implements IMsgView{
         super.onCreate(savedInstanceState);
         presenter = mMsgPresenter = new MsgPresenter();
         mMsgPresenter.attachView(this);
+        fragmentManager = getFragmentManager();
+        setChioceItem(0); // 初始化页面加载时显示第一个选项卡
     }
 
     /**
@@ -57,13 +62,6 @@ public class HomeActivity extends BaseActivity implements IMsgView{
         home_my=(RadioButton) findViewById(R.id.home_my);
         home_sendmsg=(ImageView) findViewById(R.id.home_sendmsg);
         fragment_container=(FrameLayout) findViewById(R.id.fragment_container);
-        mypage_image=(ImageView) findViewById(R.id.mypage_image);
-        mypage_setting=(TextView) findViewById(R.id.mypage_setting);
-        mypage_user=(TextView) findViewById(R.id.mypage_user);
-        searchView=(SearchView) findViewById(R.id.searchView);
-        listMsg=(ListView) findViewById(R.id.listMsg);
-        View xmlView =LayoutInflater.from(this).inflate(R.layout.activity_main, null);
-        fragment_container.addView(xmlView);
     }
 
     /**
@@ -74,7 +72,6 @@ public class HomeActivity extends BaseActivity implements IMsgView{
         home_msg.setOnClickListener(this);
         home_my.setOnClickListener(this);
         home_sendmsg.setOnClickListener(this);
-//        mypage_setting.setOnClickListener(this);
     }
 
     /**
@@ -82,23 +79,18 @@ public class HomeActivity extends BaseActivity implements IMsgView{
      * */
     @Override
     public void onClick(View v) {
-        View xmlView=null;
+
         switch (v.getId()) {
             case R.id.home_msg:
-                fragment_container=(FrameLayout) findViewById(R.id.fragment_container);
-                xmlView =LayoutInflater.from(this).inflate(R.layout.activity_main, null);
-                fragment_container.addView(xmlView);
+                setChioceItem(0);
                 break;
             case R.id.home_sendmsg:
-                startActivity(SendmsgActivity.class,null);
+                startActivity(SendmsgActivity.class, null);
                 break;
             case R.id.home_my:
-                fragment_container=(FrameLayout) findViewById(R.id.fragment_container);
-                View xmlView1 =LayoutInflater.from(this).inflate(R.layout.activity_my, null);
-                fragment_container.addView(xmlView1);
+                //getFragmentManager().beginTransaction().add(R.id.fragment_container, new MypageFragment()).commit();
+                setChioceItem(1);
                 break;
-            case R.id.mypage_setting:
-                startActivity(SettingActivity.class,null);
         }
         super.onClick(v);
     }
@@ -122,4 +114,50 @@ public class HomeActivity extends BaseActivity implements IMsgView{
 
     @Override
     public void hideLoading(){}
+
+    /**
+     * 设置点击选项卡的事件处理
+     *
+     * @param index 选项卡的标号：0, 1
+     */
+    private void setChioceItem(int index) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        hideFragments(fragmentTransaction);//隐藏所以fragment
+        switch (index) {
+            case 0:
+                // 如果为空，则创建一个并添加到界面上
+                if (mainFragment == null) {
+                    mainFragment = new MainFragment();
+                    fragmentTransaction.add(R.id.fragment_container, mainFragment);
+                } else {
+                    // 如果不为空，则直接将它显示出来
+                    fragmentTransaction.show(mainFragment);
+                }
+                break;
+            case 1:
+                if (mypageFragment == null) {
+                    mypageFragment = new MypageFragment();
+                    fragmentTransaction.add(R.id.fragment_container, mypageFragment);
+                } else {
+                    fragmentTransaction.show(mypageFragment);
+                }
+                break;
+        }
+        fragmentTransaction.commit(); // 提交
+    }
+
+    /**
+     * 隐藏Fragment
+     *
+     * @param fragmentTransaction
+     */
+    private void hideFragments(FragmentTransaction fragmentTransaction) {
+        if (mainFragment !=null){
+            fragmentTransaction.hide(mainFragment);
+        }
+        if (mypageFragment!=null){
+            fragmentTransaction.hide(mypageFragment);
+        }
+    }
+
 }

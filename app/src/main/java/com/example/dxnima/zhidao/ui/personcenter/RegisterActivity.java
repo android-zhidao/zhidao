@@ -14,6 +14,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
  * 注册页面
+ * 对应xml:activity_register
  * Created by DXnima on 2019/4/3.
  */
 public class RegisterActivity extends BaseActivity implements IUserLoginView{

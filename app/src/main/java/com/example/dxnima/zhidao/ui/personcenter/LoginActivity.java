@@ -15,6 +15,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
  * 登录界面（LoginActivity），只要继承BaseActivity则可以了
+ * 对应xml:activity_login.xml
  * Created by DXnima on 2019/4/1.
  */
 public class LoginActivity extends BaseActivity implements IUserLoginView{
@@ -70,7 +71,10 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
     }
 
 
-    //添加按钮点击事件
+    /**
+     * 添加按钮点击事件
+     * 有点击事件就在onclick实现
+     * */
     @Override
     public void initListeners() {
         login.setOnClickListener(this);
@@ -78,6 +82,25 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
         go_updatepassword.setOnClickListener(this);
     }
 
+    /**
+     * 点击事件
+     * */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.login:
+                //mUserPresenter.loginInternet(userName.getText().toString(), password.getText().toString());//登陆
+                startActivity(HomeActivity.class,null);
+                break;
+            case R.id.go_register:
+                startActivity(RegisterActivity.class,null);//点击注册跳转注册界面
+                break;
+            case R.id.go_updatepassword:
+                startActivity(UpdatepsdActivity.class,null);//点击修改密码跳转修改密码界面
+                break;
+        }
+        super.onClick(v);
+    }
 
     //初始化数据
     @Override
@@ -107,26 +130,6 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
     }
 
     /**
-     * 点击事件
-     * */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.login:
-                //mUserPresenter.loginInternet(userName.getText().toString(), password.getText().toString());//登陆
-                startActivity(HomeActivity.class,null);
-                break;
-            case R.id.go_register:
-                startActivity(RegisterActivity.class,null);//点击注册跳转注册界面
-                break;
-            case R.id.go_updatepassword:
-                startActivity(UpdatepsdActivity.class,null);//点击修改密码跳转修改密码界面
-                break;
-        }
-        super.onClick(v);
-    }
-
-    /**
      *控件内容初始化
      * */
     @Override
@@ -147,8 +150,7 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//关掉所要到的界面中间的 activity
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//设置不要刷新将要跳转的界面
         startActivity(intent);
-        this.finish();
-        //startActivity(HomeActivity.class,null);
+        this.finish();//完成登陆注册等开始界面的销毁
     }
 
     @Override

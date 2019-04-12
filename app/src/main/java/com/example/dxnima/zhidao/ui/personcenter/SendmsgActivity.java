@@ -9,6 +9,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
  * 主题发送页面
+ * 对应xml:activity_addmsg
  * Created by DXnima on 2019/4/11.
  */
 public class SendmsgActivity extends BaseActivity implements IMsgView{

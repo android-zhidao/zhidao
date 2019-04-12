@@ -36,6 +36,7 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
             mvpView.onError("不能为空！","");
         }
         else
+        //post请求
         httpManager.requestAsyncPostByTag(URLUtil.USER_LOGIN, getName(), new ITRequestResult<User>() {
                     @Override
                     public void onCompleted() {

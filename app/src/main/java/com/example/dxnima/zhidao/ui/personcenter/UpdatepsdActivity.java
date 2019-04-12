@@ -7,6 +7,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
  * 修改密码
+ * 对应xml:activity_updatepsd
  * Created by DXnima on 2019/4/9.
  */
 public class UpdatepsdActivity extends BaseActivity {

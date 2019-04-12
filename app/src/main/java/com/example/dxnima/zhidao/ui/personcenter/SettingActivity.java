@@ -9,6 +9,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
  * 设置页面
+ * 对应xml:activity_setting
  * Created by DXnima on 2019/4/11.
  */
 public class SettingActivity extends BaseActivity implements IUserLoginView {

@@ -9,6 +9,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
  * 欢迎界面
+ * 对应xml:common_lunch.xml
  * Created by DXnima on 2019/4/3.
  */
 public class WelcomeActivity extends BaseActivity{
