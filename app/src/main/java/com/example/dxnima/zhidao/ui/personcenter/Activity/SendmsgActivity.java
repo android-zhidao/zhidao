@@ -1,4 +1,4 @@
-package com.example.dxnima.zhidao.ui.personcenter;
+package com.example.dxnima.zhidao.ui.personcenter.Activity;
 
 import android.os.Bundle;
 

@@ -1,33 +1,39 @@
-package com.example.dxnima.zhidao.ui.personcenter;
+package com.example.dxnima.zhidao.ui.personcenter.Activity;
 
 import android.os.Bundle;
 
 import com.example.dxnima.zhidao.R;
+import com.example.dxnima.zhidao.biz.personcenter.IUserLoginView;
+import com.example.dxnima.zhidao.biz.personcenter.UserPresenter;
 import com.example.dxnima.zhidao.ui.base.BaseActivity;
 
 /**
- * 修改密码
- * 对应xml:activity_updatepsd
- * Created by DXnima on 2019/4/9.
+ * 设置页面
+ * 对应xml:activity_setting
+ * Created by DXnima on 2019/4/11.
  */
-public class UpdatepsdActivity extends BaseActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_udatepsd);
-        setHeader();
-        super.onCreate(savedInstanceState);
-    }
+public class SettingActivity extends BaseActivity implements IUserLoginView {
+
+    private UserPresenter mUserPresenter;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_setting);
+        super.onCreate(savedInstanceState);
+        setHeader();
+        presenter = mUserPresenter = new UserPresenter();
+        mUserPresenter.attachView(this);
+    }
+    @Override
     public void initViews() {
-        //setContentView(R.layout.activity_udatepsd);
+
     }
 
     // 初始化公共头部
     @Override
     public void setHeader() {
         super.setHeader();
-        title.setText("修改密码");
+        title.setText("设置");
     }
 
     @Override
@@ -46,7 +52,7 @@ public class UpdatepsdActivity extends BaseActivity {
     }
 
     @Override
-    public void onSuccess(String errorMsg, String code) {
+    public void onSuccess(String string, String code) {
 
     }
 
@@ -57,6 +63,11 @@ public class UpdatepsdActivity extends BaseActivity {
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void clearEditContent() {
 
     }
 }

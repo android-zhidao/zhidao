@@ -7,13 +7,13 @@
     <color name="green">#00ff00</color>
     <color name="yellow">#ffff00</color>
     <color name="red">#ff0000</color>
-    <color name="blue">#f134beff</color>
+    <color name="blue">#169ad4</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="gray1">#949494</color>
     <color name="translucent">#00000000</color>
     <color name="gray">#eeeeee</color>
     <color name="gain_code">#ff9933</color>
-    <color name="home_bule1">#012742</color>
-    <color name="home_bule2">#00C7B7</color>
+    <color name="home_bule1">#199dd7</color>
+    <color name="home_bule2">#007afd</color>
 </resources>

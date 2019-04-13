@@ -1,4 +1,4 @@
-package com.example.dxnima.zhidao.ui.personcenter;
+package com.example.dxnima.zhidao.ui.personcenter.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -89,8 +89,8 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                //mUserPresenter.loginInternet(userName.getText().toString(), password.getText().toString());//登陆
-                startActivity(HomeActivity.class,null);
+                mUserPresenter.loginDatabase(userName.getText().toString(), password.getText().toString());//登陆
+                //startActivity(HomeActivity.class,null);
                 break;
             case R.id.go_register:
                 startActivity(RegisterActivity.class,null);//点击注册跳转注册界面

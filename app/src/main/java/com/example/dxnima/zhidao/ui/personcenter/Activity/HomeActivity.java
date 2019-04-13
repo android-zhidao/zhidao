@@ -1,4 +1,4 @@
-package com.example.dxnima.zhidao.ui.personcenter;
+package com.example.dxnima.zhidao.ui.personcenter.Activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,6 +12,8 @@ import com.example.dxnima.zhidao.R;
 import com.example.dxnima.zhidao.biz.personcenter.IMsgView;
 import com.example.dxnima.zhidao.biz.personcenter.MsgPresenter;
 import com.example.dxnima.zhidao.ui.base.BaseActivity;
+import com.example.dxnima.zhidao.ui.personcenter.Fragment.MainFragment;
+import com.example.dxnima.zhidao.ui.personcenter.Fragment.MypageFragment;
 
 /**
  * 主页面
@@ -33,6 +35,10 @@ public class HomeActivity extends BaseActivity implements IMsgView{
     private RadioButton home_msg,home_my;
 
     private ImageView home_sendmsg;
+
+    /**
+     * listview控件初始化
+     * */
 
     private FrameLayout fragment_container;
 

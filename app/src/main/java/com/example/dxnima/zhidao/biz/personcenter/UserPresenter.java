@@ -1,5 +1,7 @@
 package com.example.dxnima.zhidao.biz.personcenter;
 
+import android.util.Log;
+
 import com.example.dxnima.zhidao.ZDApplication;
 import com.example.dxnima.zhidao.bean.table.User;
 import com.example.dxnima.zhidao.biz.BasePresenter;
@@ -12,7 +14,10 @@ import com.example.dxnima.zhidao.capabilities.http.ITRequestResult;
 import com.example.dxnima.zhidao.capabilities.http.Param;
 import com.example.dxnima.zhidao.constant.URLUtil;
 import com.example.dxnima.zhidao.dao.DaoSession;
+import com.example.dxnima.zhidao.dao.UserDao;
 import com.example.dxnima.zhidao.util.GeneralUtils;
+
+import java.util.List;
 
 /**
  *用户相关方法实现层
@@ -98,7 +103,7 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
                 new Param("password", password),new Param("email",email));
     }
 
-   /**
+
     //本地数据库登陆实现
     public void loginDatabase(String username, String password) {
         mvpView.showLoading();
@@ -145,5 +150,5 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
             }
         }
     }
-    **/
+
 }

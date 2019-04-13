@@ -1,4 +1,4 @@
-package com.example.dxnima.zhidao.ui.personcenter;
+package com.example.dxnima.zhidao.ui.personcenter.Fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dxnima.zhidao.R;
+import com.example.dxnima.zhidao.ui.personcenter.Activity.SettingActivity;
 
 /**
  * 我的主页界面

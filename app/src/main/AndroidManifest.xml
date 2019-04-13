@@ -14,23 +14,26 @@
         android:label="吱道"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.personcenter.WelcomeActivity">
+        <!--.ui.personcenter.Activity.WelcomeActivity-->
+        <activity android:name=".ui.personcenter.Activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.personcenter.LoginActivity">
+        <activity android:name=".ui.personcenter.Activity.LoginActivity">
         </activity>
-        <activity android:name=".ui.personcenter.HomeActivity">
+        <activity android:name=".ui.personcenter.Activity.HomeActivity">
         </activity>
-        <activity android:name=".ui.personcenter.RegisterActivity">
+        <activity android:name=".ui.personcenter.Activity.RegisterActivity">
         </activity>
-        <activity android:name=".ui.personcenter.UpdatepsdActivity">
+        <activity android:name=".ui.personcenter.Activity.UpdatepsdActivity">
         </activity>
-        <activity android:name=".ui.personcenter.SendmsgActivity">
+        <activity android:name=".ui.personcenter.Activity.SendmsgActivity">
         </activity>
-        <activity android:name=".ui.personcenter.SettingActivity">
+        <activity android:name=".ui.personcenter.Activity.SettingActivity">
+        </activity>
+        <activity android:name=".ui.personcenter.Activity.SeemsgActivity">
         </activity>
     </application>
 
