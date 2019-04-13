@@ -11,6 +11,7 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="gray1">#949494</color>
+    <color name="gray2">#c2c2c2</color>
     <color name="translucent">#00000000</color>
     <color name="gray">#eeeeee</color>
     <color name="gain_code">#ff9933</color>

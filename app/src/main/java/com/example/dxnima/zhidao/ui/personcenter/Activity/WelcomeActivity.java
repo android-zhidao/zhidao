@@ -3,6 +3,7 @@ package com.example.dxnima.zhidao.ui.personcenter.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ImageView;
 
 import com.example.dxnima.zhidao.R;
 import com.example.dxnima.zhidao.ui.base.BaseActivity;
@@ -14,6 +15,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
  */
 public class WelcomeActivity extends BaseActivity{
 
+    private ImageView gifView;
     private final int SPLASH_DISPLAY_LENGHT = 3000;  //延迟3秒
 
     @Override
@@ -32,7 +34,7 @@ public class WelcomeActivity extends BaseActivity{
 
     @Override
     public void initViews() {
-
+        gifView=(ImageView) findViewById(R.id.gifView);
     }
 
     @Override

@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textSize="28dp"/>
+            android:textSize="18dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,10 +25,8 @@
             android:text="结束时间："
             android:id="@+id/msg_texttime"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/list_msgimage"
-            android:layout_toEndOf="@+id/list_msgimage"
-            android:layout_marginLeft="48dp"
-            android:layout_marginStart="48dp"/>
+            android:layout_toLeftOf="@+id/list_msgendtime"
+            android:layout_toStartOf="@+id/list_msgendtime"/>
 
         <ImageView
             android:layout_width="20dp"
@@ -41,13 +39,14 @@
             android:layout_toEndOf="@+id/list_msgtitle"/>
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:id="@+id/imageView4"
             android:layout_alignParentTop="true"
+            android:src="@drawable/item_jiantou"
+            android:layout_above="@+id/list_msgendtime"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/item_jiantou"/>
+            android:layout_alignParentEnd="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +54,7 @@
             android:text="10月01日 00：00"
             android:id="@+id/list_msgendtime"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/msg_texttime"
-            android:layout_toEndOf="@+id/msg_texttime"/>
+            android:layout_toLeftOf="@+id/imageView4"
+            android:layout_toStartOf="@+id/imageView4"/>
     </RelativeLayout>
 </LinearLayout>

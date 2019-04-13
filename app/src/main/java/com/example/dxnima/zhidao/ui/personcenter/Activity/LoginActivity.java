@@ -88,8 +88,7 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login:
-                mUserPresenter.loginDatabase(userName.getText().toString(), password.getText().toString());//登陆
+            case R.id.login:mUserPresenter.loginDatabase(userName.getText().toString(), password.getText().toString());//登陆
                 //startActivity(HomeActivity.class,null);
                 break;
             case R.id.go_register:
