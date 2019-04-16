@@ -93,7 +93,7 @@ public class RegisterActivity extends BaseActivity implements IUserLoginView{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register:
-                mUserPresenter.registerDatabase(username.getText().toString(), password.getText().toString(),email.getText().toString());
+                mUserPresenter.registerInternet(username.getText().toString(), password.getText().toString(),email.getText().toString());
                 break;
             case R.id.textView:
                 //获取验证码

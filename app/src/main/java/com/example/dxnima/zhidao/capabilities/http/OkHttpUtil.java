@@ -3,11 +3,13 @@ package com.example.dxnima.zhidao.capabilities.http;
 import android.os.Handler;
 
 import com.example.dxnima.zhidao.bean.BaseResp;
+import com.example.dxnima.zhidao.bean.ListBaseResp;
 import com.example.dxnima.zhidao.capabilities.json.GsonHelper;
 import com.example.dxnima.zhidao.capabilities.log.EBLog;
 import com.example.dxnima.zhidao.util.GeneralUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -21,6 +23,7 @@ import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -49,6 +52,7 @@ public class OkHttpUtil {
 
     public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
 
+    private String sessionid="";//保存session
     /**
      * 请求url集合
      */
@@ -154,7 +158,15 @@ public class OkHttpUtil {
             builder.add(param.key, param.value);
         }
         RequestBody body = builder.build();
-        Request request = new Request.Builder().post(body).url(url).build();
+        Request request = new Request.Builder().post(body).url(url).addHeader("cookie", sessionid).build();
+        mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz));
+    }
+
+    /**异步POST请求 类对象参数请求*/
+    public <T> void requestAsyncPostClass(String url, ITRequestResult<T> iTRequestResult, Class<T> clazz, T tClass) {
+        String json=GsonHelper.toJson(tClass);
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder().post(body).url(url).addHeader("cookie", sessionid).build();
         mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz));
     }
 
@@ -176,7 +188,15 @@ public class OkHttpUtil {
             builder.add(param.key, param.value);
         }
         RequestBody body = builder.build();
-        Request request = new Request.Builder().post(body).url(url).tag(url).build();
+        Request request = new Request.Builder().post(body).url(url).tag(url).addHeader("cookie", sessionid).build();
+        mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz, activityName));
+    }
+
+    public <T> void requestAsyncPostByTagClass(String url, String activityName, ITRequestResult<T> iTRequestResult, Class<T> clazz,T tClass) {
+        addRequestUrl(activityName, url);
+        String json=GsonHelper.toJson(tClass);
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder().post(body).url(url).tag(url).addHeader("cookie", sessionid).build();
         mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz, activityName));
     }
 
@@ -462,11 +482,17 @@ public class OkHttpUtil {
                 try {
                     String result = response.body().string(); //方法只能调用一次
                     EBLog.i(TAG, result);
+                    if (sessionid == "") {
+                        Headers headers = response.headers();//response为okhttp请求后的响应
+                        List cookies = headers.values("Set-Cookie");
+                        String session = (String) cookies.get(0);
+                        sessionid = session.substring(0, session.indexOf(";"));
+                    }
                     final T res = GsonHelper.toType(result, clazz);//json数据转类对象
-                    final T resData = ((BaseResp<T>) res).getData();//json数据中data数据对象
+                    final List<T> resData = ((ListBaseResp<T>) res).getData();//json数据中data数据对象
                     int code = -1;
                     if (res != null && res instanceof BaseResp) {
-                        code = ((BaseResp) res).getStatus();
+                        code = ((ListBaseResp) res).getstatus();
                         switch (code) {
                             case 0://success
                                 postSucessMsg(resData);//返回json中 data数据对象
@@ -510,7 +536,7 @@ public class OkHttpUtil {
         /**
          * 主线程发送正确消息
          */
-        private void postSucessMsg(final T res) {
+        private void postSucessMsg(final List<T> res) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {

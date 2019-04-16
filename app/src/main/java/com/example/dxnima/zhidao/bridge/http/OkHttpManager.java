@@ -63,6 +63,12 @@ public class OkHttpManager implements BridgeLifeCycleListener {
         OkHttpUtil.getInstance().requestAsyncPost(url, iTRequestResult, clazz, params);
     }
 
+    /**异步POST请求 传类对象参数请求*/
+    public <T> void requestAsyncPostClass(String url, ITRequestResult<T> iTRequestResult, Class<T> clazz, T tClass) {
+
+        OkHttpUtil.getInstance().requestAsyncPostClass(url, iTRequestResult, clazz, tClass);
+    }
+
     /**
      * 异步POST请求 带tag(关闭页面则取消请求)
      *
@@ -77,6 +83,9 @@ public class OkHttpManager implements BridgeLifeCycleListener {
         OkHttpUtil.getInstance().requestAsyncPostByTag(url, activityName, iTRequestResult, clazz, params);
     }
 
+    public <T> void requestAsyncPostByTagClass(String url, String activityName, ITRequestResult<T> iTRequestResult, Class<T> clazz,T tClass) {
+        OkHttpUtil.getInstance().requestAsyncPostByTagClass(url, activityName, iTRequestResult, clazz, tClass);
+    }
 
     /**
      * 异步DELETE请求

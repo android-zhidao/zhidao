@@ -1,6 +1,6 @@
 package com.example.dxnima.zhidao.bean.table;
 
-import com.example.dxnima.zhidao.bean.BaseResp;
+import com.example.dxnima.zhidao.bean.ListBaseResp;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -10,7 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by DXnima on 2019/4/2.
  */
 @Entity
-public class User  extends BaseResp<User>{
+public class User  extends ListBaseResp<User> {
 
     private Integer userid;
 

@@ -33,7 +33,6 @@ public class MainFragment extends Fragment {
     private TextView txt_empty;
     private MyAdapter mAdapter = null;
     private List<Data> mData = null;
-
     //创造View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

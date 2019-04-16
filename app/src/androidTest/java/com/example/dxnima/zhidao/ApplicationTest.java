@@ -4,107 +4,50 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
+import com.example.dxnima.zhidao.bean.ListBaseResp;
+import com.example.dxnima.zhidao.bean.table.Msg;
 import com.example.dxnima.zhidao.bean.table.User;
 import com.example.dxnima.zhidao.capabilities.json.GsonHelper;
-import com.google.gson.JsonObject;
-import com.squareup.okhttp.Callback;
+import com.example.dxnima.zhidao.constant.URLUtil;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
+import java.util.List;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
 public class ApplicationTest<T> extends ApplicationTestCase<Application> {
     public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
-    private Class<User> clazz;
-    String url= "http://i24388o999.qicp.vip:36195/user/login.do";
+    String url= URLUtil.USER_LOGIN;
     public ApplicationTest() {
         super(Application.class);}
         public void testMain(){
-            JsonObject object=new JsonObject();
-            object.addProperty("username", "123");
-            object.addProperty("password", "123");
-            String jsonStr=object.toString();
-            String string="{\n" +
-                    "\t\"status\": \"0\",\n" +
-                    "\t\"data\": {\n" +
-                    "\t\t\"username\": \"123\",\n" +
-                    "\t\t\"password\": \"123\"\n" +
-                    "\t},\n" +
-                    "\t\"msg\": \"www\",\n" +
-                    "\t\"success\": \"123\"\n" +
-                    "}";
-            System.out.println(jsonStr);
-
-            final User res= (User) GsonHelper.toType(jsonStr,clazz);
-            System.out.println(res.getUsername());
         }
 
     /**
      * 测试okhttp  post方法
      *
      * */
-    public void testOkhttpGet() {
-        OkHttpClient mOkHttpClient=new OkHttpClient();
-
-        JsonObject object=new JsonObject();
-        object.addProperty("username", "wnm");
-        //object.addProperty("password", "123");
-        String jsonStr=object.toString();
-        RequestBody body = RequestBody.create(JSON, jsonStr);
-        Request request = new Request.Builder().post(body).url(url).build();
-        mOkHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                System.out.println("113" + request.toString() + e.toString());
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String result = response.body().string(); //方法只能调用一次
-                    System.out.println("response   " + response);
-//                    System.out.println("string   " + result);
-//                    JsonParser parser = new JsonParser();//Json解析
-//                    JsonObject jsonObject = (JsonObject) parser.parse(result);
-//                    Log.e("113123", "返回信息=== " + jsonObject.get("msg"));
-                } else System.out.println("失败");
-            }
-        });
-    }
-
-    public void testObjct(){
-        OkHttpClient mOkHttpClient=new OkHttpClient();
-        //使用JSONObject封装参数
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("username","wnm");
-            jsonObject.put("password","123");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void testOkhttpPost() {
+        url=URLUtil.USER_LOGIN;
+        OkHttpClient mOkHttpClient = new OkHttpClient();
         User user=new User();
-        String username="wnm";
-        String password="123";
-        user.setUsername(username.trim());
-        user.setPassword(password.trim());
-        String json= GsonHelper.toJson(user);
-        Log.d("4444",json);
-        Log.e("aaaa",jsonObject.toString());
+        user.setUsername("wnm");
+        user.setPassword("123");
+        String json=GsonHelper.toJson(user);
+        System.out.println(json);
         //创建RequestBody对象，将参数按照指定的MediaType封装
-        RequestBody requestBody = RequestBody.create(JSON,jsonObject.toString());
+        RequestBody requestBody = RequestBody.create(JSON, json);
         Request request = new Request
                 .Builder()
                 .post(requestBody)//Post请求的参数传递
                 .url(url)
+                        // .addHeader("cookie", "JSESSIONID=AEE33E9E46B8764C25AC216B76523DDE")
                 .build();
         try {
             Response response = mOkHttpClient.newCall(request).execute();
@@ -116,6 +59,70 @@ public class ApplicationTest<T> extends ApplicationTestCase<Application> {
         }
     }
 
-
+    /**
+     * 测试json 转类对象方法
+     *
+     * */
+    public void testJsontoClass(){
+        Msg msg;
+        String jsonstr="{\n" +
+                "    \"status\": 0,\n" +
+                "    \"data\": [{\n" +
+                "        \"userid\": 1,\n" +
+                "        \"username\": \"wnm\",\n" +
+                "        \"password\": \"123\",\n" +
+                "        \"email\": \"1370131288@qq.com\"\n" +
+                "    }],\n" +
+                "    \"msg\": null,\n" +
+                "    \"success\": true\n" +
+                "}";
+        String jsonList="{\n" +
+                "    \"status\": 0,\n" +
+                "    \"data\": [\n" +
+                "        {\n" +
+                "            \"msgid\": 1,\n" +
+                "            \"title\": \"wnm\",\n" +
+                "            \"endtime\": \"2019-04-16 01:50:23\",\n" +
+                "            \"code\": \"zd36786\",\n" +
+                "            \"location\": \"114.07059,30.541422\",\n" +
+                "            \"filepath\": null,\n" +
+                "            \"userid\": 1,\n" +
+                "            \"content\": \"\",\n" +
+                "            \"creatTime\": \"2019-04-15 17:50:37\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"msgid\": 2,\n" +
+                "            \"title\": \"hhh\",\n" +
+                "            \"endtime\": \"2019-04-16 02:44:24\",\n" +
+                "            \"code\": \"zd31811\",\n" +
+                "            \"location\": \"114.306161,30.805189\",\n" +
+                "            \"filepath\": null,\n" +
+                "            \"userid\": 1,\n" +
+                "            \"content\": \"\",\n" +
+                "            \"creatTime\": \"2019-04-15 18:44:32\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"msgid\": 3,\n" +
+                "            \"title\": \"wnm\",\n" +
+                "            \"endtime\": \"2019-04-16 01:50:23\",\n" +
+                "            \"code\": \"zd06923\",\n" +
+                "            \"location\": \"114.07059,30.541422\",\n" +
+                "            \"filepath\": null,\n" +
+                "            \"userid\": 1,\n" +
+                "            \"content\": null,\n" +
+                "            \"creatTime\": \"2019-04-15 22:03:07\"\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"msg\": null,\n" +
+                "    \"success\": true\n" +
+                "}";
+        User res=GsonHelper.toType(jsonstr, User.class);
+        List<User> user= ((ListBaseResp<User>)res).getData();
+        int code=((ListBaseResp)res).getstatus();
+        Log.e("str   ", user.get(0).getUsername()+code);
+        Msg resMsg=GsonHelper.toType(jsonList, Msg.class);
+        List<Msg> list=resMsg.getData();
+        Log.e("list   ", list.get(0).getCreatTime());
+    }
 
 }

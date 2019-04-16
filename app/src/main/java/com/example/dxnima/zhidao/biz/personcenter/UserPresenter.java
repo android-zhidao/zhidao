@@ -11,7 +11,6 @@ import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefManager;
 import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefUser;
 import com.example.dxnima.zhidao.bridge.http.OkHttpManager;
 import com.example.dxnima.zhidao.capabilities.http.ITRequestResult;
-import com.example.dxnima.zhidao.capabilities.http.Param;
 import com.example.dxnima.zhidao.constant.URLUtil;
 import com.example.dxnima.zhidao.dao.DaoSession;
 import com.example.dxnima.zhidao.dao.UserDao;
@@ -34,6 +33,9 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
     //网络层登陆实现
     public void loginInternet(String username, String password) {
+        User user=new User();
+        user.setUsername(username);
+        user.setPassword(password);
         mvpView.showLoading();
         //SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
         OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
@@ -42,32 +44,35 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
         }
         else
         //post请求
-        httpManager.requestAsyncPostByTag(URLUtil.USER_LOGIN, getName(), new ITRequestResult<User>() {
-                    @Override
-                    public void onCompleted() {
-                        mvpView.hideLoading();
-                    }
+        httpManager.requestAsyncPostByTagClass(URLUtil.USER_LOGIN, getName(), new ITRequestResult<User>() {
+            @Override
+            public void onCompleted() {
+                mvpView.hideLoading();
+            }
 
-                    @Override
-                    public void onSuccessful(User entity) {
-                        String s=entity.getUsername();
-                        mvpView.onSuccess("登陆成功！", "");
-                        EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
-                        manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "");
-                    }
-                    @Override
-                    public void onFailure(String errorMsg) {
-                        mvpView.onError(errorMsg, "");
-                    }
+            @Override
+            public void onSuccessful(List<User> entity) {
+                mvpView.onSuccess("登陆成功！", "");
+                EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
+                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "");
+            }
 
-                }, User.class, new Param("username", username),
-                new Param("password",password));
+            @Override
+            public void onFailure(String errorMsg) {
+                mvpView.onError(errorMsg, "");
+            }
+
+        }, User.class, user);
 
 
     }
 
     //注册网络层
     public void registerInternet(String username,String password,String email){
+        User user=new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
         mvpView.showLoading();
         //SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
         OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
@@ -81,26 +86,25 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
             mvpView.onError("邮箱格式不正确！","");
         }
         else
-        httpManager.requestAsyncPostByTag(URLUtil.USER_REGISTER,getName(),new ITRequestResult<User>() {
-                    @Override
-                    public void onCompleted() {
-                        mvpView.hideLoading();
-                    }
+        httpManager.requestAsyncPostByTagClass(URLUtil.USER_REGISTER, getName(), new ITRequestResult<User>() {
+            @Override
+            public void onCompleted() {
+                mvpView.hideLoading();
+            }
 
-                    @Override
-                    public void onSuccessful(User entity) {
-                        mvpView.onSuccess("注册成功！","");
-                        EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
-                        manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "abc");
-                    }
+            @Override
+            public void onSuccessful(List<User> entity) {
+                mvpView.onSuccess("注册成功！", "");
+                EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
+                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "abc");
+            }
 
-                    @Override
-                    public void onFailure(String errorMsg) {
-                        mvpView.onError(errorMsg, "");
-                    }
+            @Override
+            public void onFailure(String errorMsg) {
+                mvpView.onError(errorMsg, "");
+            }
 
-                }, User.class, new Param("username", username),
-                new Param("password", password),new Param("email",email));
+        }, User.class,user);
     }
 
 

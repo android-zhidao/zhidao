@@ -1,25 +1,23 @@
 package com.example.dxnima.zhidao.bean.table;
 
-import com.example.dxnima.zhidao.bean.BaseResp;
+import com.example.dxnima.zhidao.bean.ListBaseResp;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
-
-import java.util.Date;
 
 /**
  * @Entity
  * Created by DXnima on 2019/4/9.
  */
 @Entity
-public class Msg extends BaseResp<Msg> {
+public class Msg extends ListBaseResp<Msg> {
     private Integer msgid;
 
     private String title;
 
-    private Date endtime;
+    private String endtime;
 
-    private Date creattime;
+    private String creatTime;
 
     private String code;
 
@@ -71,19 +69,19 @@ public class Msg extends BaseResp<Msg> {
         this.code = code;
     }
 
-    public Date getCreattime() {
-        return this.creattime;
+    public String getCreatTime() {
+        return this.creatTime;
     }
 
-    public void setCreattime(Date creattime) {
-        this.creattime = creattime;
+    public void setCreatTime(String creatTime) {
+        this.creatTime = creatTime;
     }
 
-    public Date getEndtime() {
+    public String getEndtime() {
         return this.endtime;
     }
 
-    public void setEndtime(Date endtime) {
+    public void setEndtime(String endtime) {
         this.endtime = endtime;
     }
 
@@ -103,14 +101,14 @@ public class Msg extends BaseResp<Msg> {
         this.msgid = msgid;
     }
 
-    @Generated(hash = 1306996504)
-    public Msg(Integer msgid, String title, Date endtime, Date creattime,
+    @Generated(hash = 1239569003)
+    public Msg(Integer msgid, String title, String endtime, String creatTime,
             String code, String location, String filepath, Integer userid,
             String content) {
         this.msgid = msgid;
         this.title = title;
         this.endtime = endtime;
-        this.creattime = creattime;
+        this.creatTime = creatTime;
         this.code = code;
         this.location = location;
         this.filepath = filepath;
@@ -121,4 +119,6 @@ public class Msg extends BaseResp<Msg> {
     @Generated(hash = 23037457)
     public Msg() {
     }
+
+
 }
