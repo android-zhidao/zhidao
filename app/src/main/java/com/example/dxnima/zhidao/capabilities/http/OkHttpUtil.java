@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,7 @@ public class OkHttpUtil {
 
     public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
 
-    private String sessionid="";//保存session
+    public static String sessionid="";//保存session
     /**
      * 请求url集合
      */
@@ -158,6 +159,7 @@ public class OkHttpUtil {
             builder.add(param.key, param.value);
         }
         RequestBody body = builder.build();
+        String a=sessionid;
         Request request = new Request.Builder().post(body).url(url).addHeader("cookie", sessionid).build();
         mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz));
     }
@@ -489,10 +491,20 @@ public class OkHttpUtil {
                         sessionid = session.substring(0, session.indexOf(";"));
                     }
                     final T res = GsonHelper.toType(result, clazz);//json数据转类对象
-                    final List<T> resData = ((ListBaseResp<T>) res).getData();//json数据中data数据对象
+                    final List<T> resData;
                     int code = -1;
-                    if (res != null && res instanceof BaseResp) {
+                    if (clazz.toString().equals("class com.example.dxnima.zhidao.bean.table.User")){
+                        T user=((BaseResp<T>) res).getData();
+                        List<T> userList=new ArrayList<T>();
+                        userList.add(user);
+                        resData=userList;
+                        code = ((BaseResp) res).getstatus();
+                    }
+                    else {
+                        resData = ((ListBaseResp<T>) res).getData();//json数据中data数据对象
                         code = ((ListBaseResp) res).getstatus();
+                    }
+                    if (res != null && res instanceof BaseResp) {
                         switch (code) {
                             case 0://success
                                 postSucessMsg(resData);//返回json中 data数据对象

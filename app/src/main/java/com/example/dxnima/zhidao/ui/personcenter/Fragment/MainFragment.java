@@ -14,6 +14,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.dxnima.zhidao.R;
+import com.example.dxnima.zhidao.biz.personcenter.MsgPresenter;
 import com.example.dxnima.zhidao.ui.listView.Data;
 import com.example.dxnima.zhidao.ui.listView.MyAdapter;
 import com.example.dxnima.zhidao.ui.personcenter.Activity.SeemsgActivity;
@@ -33,6 +34,7 @@ public class MainFragment extends Fragment {
     private TextView txt_empty;
     private MyAdapter mAdapter = null;
     private List<Data> mData = null;
+    private MsgPresenter msgPresenter;
     //创造View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MainFragment extends Fragment {
         //listview初始化
         mData = new LinkedList<Data>();
         mAdapter = new MyAdapter((LinkedList<Data>) mData,getActivity());
+        msgPresenter=new MsgPresenter();
         initData();
         bindViews();
         return view;
@@ -92,6 +95,7 @@ public class MainFragment extends Fragment {
 
     //添加list数据
     public void initData() {
+        msgPresenter.allSendMsg();
         mAdapter.add(new Data(R.drawable.xingxing, "英语考试1", "10：15"));
         mAdapter.add(new Data(R.drawable.xingxing, "英语考试2", "10：15"));
         mAdapter.add(new Data(R.drawable.xingxing, "英语考试3", "10：15"));

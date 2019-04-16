@@ -20,7 +20,6 @@ public class MsgPresenter extends BasePresenter<IMsgView> {
 
     //获取全部Msg
     public void allSendMsg(){
-        mvpView.showLoading();
         OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
         httpManager.requestAsyncPost(URLUtil.MSG_ALLSENDMSG, new ITRequestResult<Msg>() {
             @Override

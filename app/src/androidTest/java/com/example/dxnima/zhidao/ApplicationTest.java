@@ -4,7 +4,6 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
-import com.example.dxnima.zhidao.bean.ListBaseResp;
 import com.example.dxnima.zhidao.bean.table.Msg;
 import com.example.dxnima.zhidao.bean.table.User;
 import com.example.dxnima.zhidao.capabilities.json.GsonHelper;
@@ -16,6 +15,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +27,7 @@ public class ApplicationTest<T> extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);}
         public void testMain(){
+
         }
 
     /**
@@ -63,20 +64,19 @@ public class ApplicationTest<T> extends ApplicationTestCase<Application> {
      * 测试json 转类对象方法
      *
      * */
-    public void testJsontoClass(){
-        Msg msg;
-        String jsonstr="{\n" +
+    public void testJsontoClass() {
+        String jsonstr = "{\n" +
                 "    \"status\": 0,\n" +
-                "    \"data\": [{\n" +
+                "    \"data\": {\n" +
                 "        \"userid\": 1,\n" +
                 "        \"username\": \"wnm\",\n" +
                 "        \"password\": \"123\",\n" +
                 "        \"email\": \"1370131288@qq.com\"\n" +
-                "    }],\n" +
+                "    },\n" +
                 "    \"msg\": null,\n" +
                 "    \"success\": true\n" +
                 "}";
-        String jsonList="{\n" +
+        String jsonList = "{\n" +
                 "    \"status\": 0,\n" +
                 "    \"data\": [\n" +
                 "        {\n" +
@@ -116,12 +116,16 @@ public class ApplicationTest<T> extends ApplicationTestCase<Application> {
                 "    \"msg\": null,\n" +
                 "    \"success\": true\n" +
                 "}";
-        User res=GsonHelper.toType(jsonstr, User.class);
-        List<User> user= ((ListBaseResp<User>)res).getData();
-        int code=((ListBaseResp)res).getstatus();
-        Log.e("str   ", user.get(0).getUsername()+code);
-        Msg resMsg=GsonHelper.toType(jsonList, Msg.class);
-        List<Msg> list=resMsg.getData();
+        User res = GsonHelper.toType(jsonstr, User.class);
+        User user=res.getData();
+        List<User> userList=new ArrayList<User>();
+        userList.add(user);
+        Log.e("456", userList.get(0).getUsername());
+//        List<User> user = ((ListBaseResp<User>) res).getData();
+//        int code = ((ListBaseResp) res).getstatus();
+//        Log.e("str   ", user.get(0).getUsername() + code);
+        Msg resMsg = GsonHelper.toType(jsonList, Msg.class);
+        List<Msg> list = resMsg.getData();
         Log.e("list   ", list.get(0).getCreatTime());
     }
 

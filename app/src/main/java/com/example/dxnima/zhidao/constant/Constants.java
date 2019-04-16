@@ -1,5 +1,7 @@
 package com.example.dxnima.zhidao.constant;
 
+import com.squareup.okhttp.MediaType;
+
 /**
  * <全局常量>
  * Created by DXnima on 2019/4/1.
@@ -32,4 +34,7 @@ public class Constants {
      * 请求失败展示信息
      */
     public static final String ERROR_MESSAGE = "请求失败，请稍后再试";
+
+    /**json*/
+    public static MediaType JSON=MediaType.parse("application/json; charset=utf-8");
 }

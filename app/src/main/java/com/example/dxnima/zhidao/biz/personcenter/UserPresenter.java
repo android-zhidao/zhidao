@@ -42,7 +42,6 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
         if (username=="" || password==""){
             mvpView.onError("不能为空！","");
         }
-        else
         //post请求
         httpManager.requestAsyncPostByTagClass(URLUtil.USER_LOGIN, getName(), new ITRequestResult<User>() {
             @Override
@@ -54,7 +53,7 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
             public void onSuccessful(List<User> entity) {
                 mvpView.onSuccess("登陆成功！", "");
                 EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
-                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "");
+                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "User");
             }
 
             @Override
