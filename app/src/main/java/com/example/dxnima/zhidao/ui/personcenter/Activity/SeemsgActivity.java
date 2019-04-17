@@ -46,6 +46,7 @@ public class SeemsgActivity extends BaseActivity implements IMsgView {
         map = (WebView) findViewById(R.id.map);
         intent= getIntent();
         msgTitel.setText(intent.getStringExtra("title"));
+        msgText.setText(intent.getStringExtra("content"));
     }
 
     // 初始化公共头部
@@ -71,7 +72,7 @@ public class SeemsgActivity extends BaseActivity implements IMsgView {
     }
 
     @Override
-    public void onSuccess(String string, String code) {
+    public void onSuccess() {
 
     }
 

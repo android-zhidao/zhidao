@@ -46,9 +46,9 @@ public class ApplicationTest<T> extends ApplicationTestCase<Application> {
         RequestBody requestBody = RequestBody.create(JSON, json);
         Request request = new Request
                 .Builder()
-                .post(requestBody)//Post请求的参数传递
+                .get()//Post请求的参数传递
                 .url(url)
-                        // .addHeader("cookie", "JSESSIONID=AEE33E9E46B8764C25AC216B76523DDE")
+                .addHeader("cookie", "JSESSIONID=AEE33E9E46B8764C25AC216B76523DDE")
                 .build();
         try {
             Response response = mOkHttpClient.newCall(request).execute();
@@ -116,17 +116,24 @@ public class ApplicationTest<T> extends ApplicationTestCase<Application> {
                 "    \"msg\": null,\n" +
                 "    \"success\": true\n" +
                 "}";
+        String jsonnon="{\n" +
+                "    \"status\": 0,\n" +
+                "    \"data\": [],\n" +
+                "    \"msg\": null,\n" +
+                "    \"success\": true\n" +
+                "}";
         User res = GsonHelper.toType(jsonstr, User.class);
         User user=res.getData();
         List<User> userList=new ArrayList<User>();
         userList.add(user);
         Log.e("456", userList.get(0).getUsername());
-//        List<User> user = ((ListBaseResp<User>) res).getData();
-//        int code = ((ListBaseResp) res).getstatus();
-//        Log.e("str   ", user.get(0).getUsername() + code);
-        Msg resMsg = GsonHelper.toType(jsonList, Msg.class);
+        Msg resMsg = GsonHelper.toType(jsonnon, Msg.class);
         List<Msg> list = resMsg.getData();
+        if (list.size()==0)
+            return;
+        else
         Log.e("list   ", list.get(0).getCreatTime());
     }
+
 
 }

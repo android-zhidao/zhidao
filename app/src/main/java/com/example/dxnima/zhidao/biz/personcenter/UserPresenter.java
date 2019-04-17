@@ -10,6 +10,7 @@ import com.example.dxnima.zhidao.bridge.Bridges;
 import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefManager;
 import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefUser;
 import com.example.dxnima.zhidao.bridge.http.OkHttpManager;
+import com.example.dxnima.zhidao.bridge.security.SecurityManager;
 import com.example.dxnima.zhidao.capabilities.http.ITRequestResult;
 import com.example.dxnima.zhidao.constant.URLUtil;
 import com.example.dxnima.zhidao.dao.DaoSession;
@@ -32,13 +33,14 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
     DaoSession daoSession =ZDApplication.getInstances().getDaoSession();
 
     //网络层登陆实现
-    public void loginInternet(String username, String password) {
-        User user=new User();
+    public void loginInternet(final String username, String password) {
+        SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
+        OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
+        final User user=new User();
         user.setUsername(username);
+        //user.setPassword(securityManager.get32MD5Str(password));
         user.setPassword(password);
         mvpView.showLoading();
-        //SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
-        OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
         if (username=="" || password==""){
             mvpView.onError("不能为空！","");
         }
@@ -51,9 +53,9 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
             @Override
             public void onSuccessful(List<User> entity) {
-                mvpView.onSuccess("登陆成功！", "");
+                mvpView.onSuccess();
                 EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
-                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "User");
+                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, entity.get(0).getUsername());
             }
 
             @Override
@@ -68,13 +70,15 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
     //注册网络层
     public void registerInternet(String username,String password,String email){
+        SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
+        OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
         User user=new User();
         user.setUsername(username);
+        //user.setPassword(securityManager.get32MD5Str(password));
         user.setPassword(password);
         user.setEmail(email);
         mvpView.showLoading();
-        //SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
-        OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
+
         if (username=="" || password==""){
             mvpView.onError("不能为空！","");
         }
@@ -93,9 +97,9 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
             @Override
             public void onSuccessful(List<User> entity) {
-                mvpView.onSuccess("注册成功！", "");
+                mvpView.onSuccess();
                 EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
-                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, "abc");
+                manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, entity.get(0).getUsername());
             }
 
             @Override
@@ -119,7 +123,7 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
             int flag = 0;
             for (User user : userList) {
                 if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                    mvpView.onSuccess("登陆成功！","");
+                    mvpView.onSuccess();
                     flag = 1;
                     break;
                 }
@@ -149,7 +153,7 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
             if (flag == 0) {
                 User user2 = new User(null,username,password,email);
                 userDao.insert(user2);
-                mvpView.onSuccess("注册成功！", "");
+                mvpView.onSuccess();
             }
         }
     }

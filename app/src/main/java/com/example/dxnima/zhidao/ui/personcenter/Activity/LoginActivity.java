@@ -43,7 +43,6 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
 
     private UserPresenter mUserPresenter;
 
-
     /**
      * Activity非正常销毁之后
      * 用onCreate
@@ -89,7 +88,6 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:mUserPresenter.loginInternet(userName.getText().toString(), password.getText().toString());//登陆
-                //startActivity(HomeActivity.class,null);
                 break;
             case R.id.go_register:
                 startActivity(RegisterActivity.class,null);//点击注册跳转注册界面
@@ -142,8 +140,9 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
         showToast(errorMsg);
     }
 
+
     @Override
-    public void onSuccess(String errorMsg, String code) {
+    public void onSuccess() {
         //成功打开新界面homeactivity 主界面
         Intent intent = new Intent(this,HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//关掉所要到的界面中间的 activity

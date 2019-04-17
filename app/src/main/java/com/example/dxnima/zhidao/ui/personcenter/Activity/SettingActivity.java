@@ -52,7 +52,7 @@ public class SettingActivity extends BaseActivity implements IUserLoginView {
     }
 
     @Override
-    public void onSuccess(String string, String code) {
+    public void onSuccess() {
 
     }
 

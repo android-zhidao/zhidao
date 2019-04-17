@@ -94,6 +94,7 @@ public class OkHttpUtil {
         Request request = new Request.Builder()
                 .get()
                 .url(constructUrl)
+                .addHeader("cookie", sessionid)
                 .build();
         mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz));
     }
@@ -115,6 +116,7 @@ public class OkHttpUtil {
                 .get()
                 .url(constructUrl)
                 .tag(url)
+                .addHeader("cookie", sessionid)
                 .build();
         mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz, activityName));
     }
@@ -159,7 +161,6 @@ public class OkHttpUtil {
             builder.add(param.key, param.value);
         }
         RequestBody body = builder.build();
-        String a=sessionid;
         Request request = new Request.Builder().post(body).url(url).addHeader("cookie", sessionid).build();
         mOkHttpClient.newCall(request).enqueue(new TRequestCallBack(iTRequestResult, clazz));
     }

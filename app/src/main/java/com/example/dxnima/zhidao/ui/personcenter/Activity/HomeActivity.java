@@ -43,7 +43,6 @@ public class HomeActivity extends BaseActivity implements IMsgView{
     private FrameLayout fragment_container;
 
     private MsgPresenter mMsgPresenter;
-
     /**
      * Activity非正常销毁之后
      * 用onCreate
@@ -94,7 +93,6 @@ public class HomeActivity extends BaseActivity implements IMsgView{
                 startActivity(SendmsgActivity.class, null);
                 break;
             case R.id.home_my:
-                //getFragmentManager().beginTransaction().add(R.id.fragment_container, new MypageFragment()).commit();
                 setChioceItem(1);
                 break;
         }
@@ -105,7 +103,8 @@ public class HomeActivity extends BaseActivity implements IMsgView{
      * 初始化数据
      */
     @Override
-    public void initData(){}
+    public void initData(){
+    }
 
     @Override
     public void onError(String errorMsg, String code){
@@ -113,7 +112,7 @@ public class HomeActivity extends BaseActivity implements IMsgView{
     }
 
     @Override
-    public void onSuccess(String errorMsg, String code){}
+    public void onSuccess(){}
 
     @Override
     public void showLoading(){}

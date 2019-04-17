@@ -53,7 +53,7 @@ public class SendmsgActivity extends BaseActivity implements IMsgView{
     }
 
     @Override
-    public void onSuccess(String string, String code) {
+    public void onSuccess() {
 
     }
 

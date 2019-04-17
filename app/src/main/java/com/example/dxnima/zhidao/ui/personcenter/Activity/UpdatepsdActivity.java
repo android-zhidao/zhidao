@@ -46,7 +46,7 @@ public class UpdatepsdActivity extends BaseActivity {
     }
 
     @Override
-    public void onSuccess(String errorMsg, String code) {
+    public void onSuccess() {
 
     }
 

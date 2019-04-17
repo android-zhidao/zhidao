@@ -108,8 +108,7 @@ public class RegisterActivity extends BaseActivity implements IUserLoginView{
     }
 
     @Override
-    public void onSuccess(String errorMsg, String code) {
-        showToast(errorMsg);
+    public void onSuccess() {
         startActivity(LoginActivity.class,null);
     }
 
