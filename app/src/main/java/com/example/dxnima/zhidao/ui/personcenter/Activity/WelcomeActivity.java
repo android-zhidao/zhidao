@@ -14,7 +14,7 @@ import com.example.dxnima.zhidao.ui.base.BaseActivity;
  */
 public class WelcomeActivity extends BaseActivity{
 
-    private final int SPLASH_DISPLAY_LENGHT = 1000;  //延迟4秒
+    private final int SPLASH_DISPLAY_LENGHT = 1000;  //延迟1秒
 
     @Override
     public void onCreate(Bundle savedInstanceState){

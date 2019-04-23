@@ -27,12 +27,11 @@ public class MsgDao extends AbstractDao<Msg, Void> {
         public final static Property Msgid = new Property(0, Integer.class, "msgid", false, "MSGID");
         public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
         public final static Property Endtime = new Property(2, String.class, "endtime", false, "ENDTIME");
-        public final static Property CreatTime = new Property(3, String.class, "creatTime", false, "CREAT_TIME");
-        public final static Property Code = new Property(4, String.class, "code", false, "CODE");
-        public final static Property Location = new Property(5, String.class, "location", false, "LOCATION");
-        public final static Property Filepath = new Property(6, String.class, "filepath", false, "FILEPATH");
-        public final static Property Userid = new Property(7, Integer.class, "userid", false, "USERID");
-        public final static Property Content = new Property(8, String.class, "content", false, "CONTENT");
+        public final static Property Creattime = new Property(3, String.class, "creattime", false, "CREATTIME");
+        public final static Property Location = new Property(4, String.class, "location", false, "LOCATION");
+        public final static Property Filepath = new Property(5, String.class, "filepath", false, "FILEPATH");
+        public final static Property Content = new Property(6, String.class, "content", false, "CONTENT");
+        public final static Property Subid = new Property(7, Integer.class, "subid", false, "SUBID");
     };
 
 
@@ -51,12 +50,11 @@ public class MsgDao extends AbstractDao<Msg, Void> {
                 "\"MSGID\" INTEGER," + // 0: msgid
                 "\"TITLE\" TEXT," + // 1: title
                 "\"ENDTIME\" TEXT," + // 2: endtime
-                "\"CREAT_TIME\" TEXT," + // 3: creatTime
-                "\"CODE\" TEXT," + // 4: code
-                "\"LOCATION\" TEXT," + // 5: location
-                "\"FILEPATH\" TEXT," + // 6: filepath
-                "\"USERID\" INTEGER," + // 7: userid
-                "\"CONTENT\" TEXT);"); // 8: content
+                "\"CREATTIME\" TEXT," + // 3: creattime
+                "\"LOCATION\" TEXT," + // 4: location
+                "\"FILEPATH\" TEXT," + // 5: filepath
+                "\"CONTENT\" TEXT," + // 6: content
+                "\"SUBID\" INTEGER);"); // 7: subid
     }
 
     /** Drops the underlying database table. */
@@ -84,34 +82,29 @@ public class MsgDao extends AbstractDao<Msg, Void> {
             stmt.bindString(3, endtime);
         }
  
-        String creatTime = entity.getCreatTime();
-        if (creatTime != null) {
-            stmt.bindString(4, creatTime);
-        }
- 
-        String code = entity.getCode();
-        if (code != null) {
-            stmt.bindString(5, code);
+        String creattime = entity.getCreattime();
+        if (creattime != null) {
+            stmt.bindString(4, creattime);
         }
  
         String location = entity.getLocation();
         if (location != null) {
-            stmt.bindString(6, location);
+            stmt.bindString(5, location);
         }
  
         String filepath = entity.getFilepath();
         if (filepath != null) {
-            stmt.bindString(7, filepath);
-        }
- 
-        Integer userid = entity.getUserid();
-        if (userid != null) {
-            stmt.bindLong(8, userid);
+            stmt.bindString(6, filepath);
         }
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(9, content);
+            stmt.bindString(7, content);
+        }
+ 
+        Integer subid = entity.getSubid();
+        if (subid != null) {
+            stmt.bindLong(8, subid);
         }
     }
 
@@ -134,34 +127,29 @@ public class MsgDao extends AbstractDao<Msg, Void> {
             stmt.bindString(3, endtime);
         }
  
-        String creatTime = entity.getCreatTime();
-        if (creatTime != null) {
-            stmt.bindString(4, creatTime);
-        }
- 
-        String code = entity.getCode();
-        if (code != null) {
-            stmt.bindString(5, code);
+        String creattime = entity.getCreattime();
+        if (creattime != null) {
+            stmt.bindString(4, creattime);
         }
  
         String location = entity.getLocation();
         if (location != null) {
-            stmt.bindString(6, location);
+            stmt.bindString(5, location);
         }
  
         String filepath = entity.getFilepath();
         if (filepath != null) {
-            stmt.bindString(7, filepath);
-        }
- 
-        Integer userid = entity.getUserid();
-        if (userid != null) {
-            stmt.bindLong(8, userid);
+            stmt.bindString(6, filepath);
         }
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(9, content);
+            stmt.bindString(7, content);
+        }
+ 
+        Integer subid = entity.getSubid();
+        if (subid != null) {
+            stmt.bindLong(8, subid);
         }
     }
 
@@ -176,12 +164,11 @@ public class MsgDao extends AbstractDao<Msg, Void> {
             cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // msgid
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // title
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // endtime
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // creatTime
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // code
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // location
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // filepath
-            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // userid
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // content
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // creattime
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // location
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // filepath
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // content
+            cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7) // subid
         );
         return entity;
     }
@@ -191,12 +178,11 @@ public class MsgDao extends AbstractDao<Msg, Void> {
         entity.setMsgid(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
         entity.setTitle(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setEndtime(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setCreatTime(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setCode(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setLocation(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setFilepath(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setUserid(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setContent(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setCreattime(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setLocation(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setFilepath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setContent(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setSubid(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
      }
     
     @Override

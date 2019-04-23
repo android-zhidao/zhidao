@@ -9,11 +9,14 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.example.dxnima.zhidao.R;
+import com.example.dxnima.zhidao.bean.table.Msg;
 import com.example.dxnima.zhidao.biz.personcenter.IMsgView;
 import com.example.dxnima.zhidao.biz.personcenter.MsgPresenter;
 import com.example.dxnima.zhidao.ui.base.BaseActivity;
 import com.example.dxnima.zhidao.ui.personcenter.Fragment.MainFragment;
 import com.example.dxnima.zhidao.ui.personcenter.Fragment.MypageFragment;
+
+import java.util.List;
 
 /**
  * 主页面
@@ -43,6 +46,7 @@ public class HomeActivity extends BaseActivity implements IMsgView{
     private FrameLayout fragment_container;
 
     private MsgPresenter mMsgPresenter;
+    private List<Msg> msgList=null;
     /**
      * Activity非正常销毁之后
      * 用onCreate
@@ -53,6 +57,7 @@ public class HomeActivity extends BaseActivity implements IMsgView{
         setContentView(R.layout.activity_home);
         super.onCreate(savedInstanceState);
         presenter = mMsgPresenter = new MsgPresenter();
+        mMsgPresenter.allSendMsg();
         mMsgPresenter.attachView(this);
         fragmentManager = getFragmentManager();
         setChioceItem(0); // 初始化页面加载时显示第一个选项卡
@@ -84,9 +89,9 @@ public class HomeActivity extends BaseActivity implements IMsgView{
      * */
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.home_msg:
+                mMsgPresenter.allSendMsg();
                 setChioceItem(0);
                 break;
             case R.id.home_sendmsg:

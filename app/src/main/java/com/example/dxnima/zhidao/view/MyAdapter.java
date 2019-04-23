@@ -1,4 +1,4 @@
-package com.example.dxnima.zhidao.ui.listView;
+package com.example.dxnima.zhidao.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,9 +19,9 @@ import java.util.LinkedList;
 public class MyAdapter extends BaseAdapter {
 
     private Context mContext;
-    private LinkedList<Data> mData;
+    private LinkedList<MyListViewData> mData;
 
-    public MyAdapter(LinkedList<Data> mData,Context mContext) {
+    public MyAdapter(LinkedList<MyListViewData> mData,Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
     }
@@ -50,6 +50,7 @@ public class MyAdapter extends BaseAdapter {
             holder.list_msgimage = (ImageView) convertView.findViewById(R.id.list_msgimage);
             holder.list_msgtitel = (TextView) convertView.findViewById(R.id.list_msgtitle);
             holder.list_msgendtime=(TextView) convertView.findViewById(R.id.list_msgendtime);
+            holder.list_texttime=(TextView) convertView.findViewById(R.id.list_texttime);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -57,11 +58,12 @@ public class MyAdapter extends BaseAdapter {
         holder.list_msgimage.setImageResource(mData.get(position).getImgId());
         holder.list_msgtitel.setText(mData.get(position).getTitle());
         holder.list_msgendtime.setText(mData.get(position).getEndtime());
+        holder.list_texttime.setText(mData.get(position).getText());
         return convertView;
     }
 
     //添加一个元素
-    public void add(Data data) {
+    public void add(MyListViewData data) {
         if (mData == null) {
             mData = new LinkedList<>();
         }
@@ -70,7 +72,7 @@ public class MyAdapter extends BaseAdapter {
     }
 
     //往特定位置，添加一个元素
-    public void add(int position,Data data){
+    public void add(int position,MyListViewData data){
         if (mData == null) {
             mData = new LinkedList<>();
         }
@@ -78,7 +80,7 @@ public class MyAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void remove(Data data) {
+    public void remove(MyListViewData data) {
         if(mData != null) {
             mData.remove(data);
         }
@@ -101,7 +103,7 @@ public class MyAdapter extends BaseAdapter {
 
     private class ViewHolder {
         ImageView list_msgimage;
-        TextView list_msgtitel,list_msgendtime;
+        TextView list_msgtitel,list_msgendtime,list_texttime;
     }
 
 }

@@ -34,6 +34,11 @@ public class URLUtil {
     public static final String USER_GETUSERINFO=SERVER+"user/get_user_info.do";
 
     /**
+     * 退出登陆
+     * */
+    public static final String USER_LOGINOUT=SERVER+"user/loginOut.do";
+
+    /**
      * 信息发送
      */
     public static final String MSG_SENDMSG=SERVER+"msg/sendMsg.do";
@@ -41,10 +46,26 @@ public class URLUtil {
     /**
      * 获取已经发送信息
      */
-    public static final String MSG_ALLSENDMSG=SERVER+"msg/allSendMsg.do";
+    public static final String MSG_ALLSENDMSG=SERVER+"msg/allMsgByCode.do";
 
     /**
-     * 关注信息
+     * 关注主题
      */
-    public static final String GETMSG_FOCUSMSG=SERVER+"gstMsg/focusMsg.do";
+    public static final String GETSUBJECT_FOCUS=SERVER+"getSubject/focusSubject.do";
+
+    /**
+     * 查询所有关注的主题
+     */
+    public static final String GETSUBJECT_ALLFOCUS=SERVER+"getSubject/allFocusSubject.do";
+
+    /**
+     * 添加主题
+     */
+    public static final String SUBJECT_ADD=SERVER+"subject/addSubject.do";
+
+    /**
+     * 查询所有添加的主题
+     */
+    public static final String SUBJECT_ALL=SERVER+"subject/allSendSubject.do";
+
 }

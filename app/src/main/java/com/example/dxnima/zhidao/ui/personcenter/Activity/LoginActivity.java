@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.dxnima.zhidao.R;
 import com.example.dxnima.zhidao.biz.personcenter.IUserLoginView;
+import com.example.dxnima.zhidao.biz.personcenter.MsgPresenter;
 import com.example.dxnima.zhidao.biz.personcenter.UserPresenter;
 import com.example.dxnima.zhidao.constant.Event;
 import com.example.dxnima.zhidao.ui.base.BaseActivity;
@@ -143,10 +144,11 @@ public class LoginActivity extends BaseActivity implements IUserLoginView{
 
     @Override
     public void onSuccess() {
+        MsgPresenter mMsgPresenter=new MsgPresenter();
+        mMsgPresenter.allSendMsg();
         //成功打开新界面homeactivity 主界面
         Intent intent = new Intent(this,HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//关掉所要到的界面中间的 activity
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//设置不要刷新将要跳转的界面
         startActivity(intent);
         this.finish();//完成登陆注册等开始界面的销毁
     }

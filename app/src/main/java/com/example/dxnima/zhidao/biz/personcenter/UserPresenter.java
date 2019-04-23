@@ -10,7 +10,6 @@ import com.example.dxnima.zhidao.bridge.Bridges;
 import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefManager;
 import com.example.dxnima.zhidao.bridge.cache.sharePref.EBSharedPrefUser;
 import com.example.dxnima.zhidao.bridge.http.OkHttpManager;
-import com.example.dxnima.zhidao.bridge.security.SecurityManager;
 import com.example.dxnima.zhidao.capabilities.http.ITRequestResult;
 import com.example.dxnima.zhidao.constant.URLUtil;
 import com.example.dxnima.zhidao.dao.DaoSession;
@@ -26,6 +25,8 @@ import java.util.List;
  */
 public class UserPresenter extends BasePresenter<IUserLoginView> {
 
+    public static List<User> userList=null;
+
     GeneralUtils generalUtils=new GeneralUtils();
     public UserPresenter() {
     }
@@ -34,11 +35,9 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
     //网络层登陆实现
     public void loginInternet(final String username, String password) {
-        SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
         OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
         final User user=new User();
         user.setUsername(username);
-        //user.setPassword(securityManager.get32MD5Str(password));
         user.setPassword(password);
         mvpView.showLoading();
         if (username=="" || password==""){
@@ -54,6 +53,7 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
             @Override
             public void onSuccessful(List<User> entity) {
                 mvpView.onSuccess();
+                userList=entity;
                 EBSharedPrefManager manager = BridgeFactory.getBridge(Bridges.SHARED_PREFERENCE);
                 manager.getKDPreferenceUserInfo().saveString(EBSharedPrefUser.USER_NAME, entity.get(0).getUsername());
             }
@@ -70,11 +70,9 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
     //注册网络层
     public void registerInternet(String username,String password,String email){
-        SecurityManager securityManager = BridgeFactory.getBridge(Bridges.SECURITY);
         OkHttpManager httpManager = BridgeFactory.getBridge(Bridges.HTTP);
         User user=new User();
         user.setUsername(username);
-        //user.setPassword(securityManager.get32MD5Str(password));
         user.setPassword(password);
         user.setEmail(email);
         mvpView.showLoading();
@@ -109,6 +107,7 @@ public class UserPresenter extends BasePresenter<IUserLoginView> {
 
         }, User.class,user);
     }
+
 
 
     //本地数据库登陆实现

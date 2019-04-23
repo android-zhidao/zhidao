@@ -1,6 +1,5 @@
 package com.example.dxnima.zhidao.ui.personcenter.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -9,7 +8,6 @@ import com.example.dxnima.zhidao.R;
 import com.example.dxnima.zhidao.biz.personcenter.IMsgView;
 import com.example.dxnima.zhidao.biz.personcenter.MsgPresenter;
 import com.example.dxnima.zhidao.ui.base.BaseActivity;
-import com.example.dxnima.zhidao.ui.listView.MyAdapter;
 
 /**
  * 查看通知
@@ -23,8 +21,7 @@ public class SeemsgActivity extends BaseActivity implements IMsgView {
     private WebView map;
 
     private MsgPresenter mMsgPresenter;
-    private MyAdapter myAdapter;
-    private Intent intent;
+    private Bundle bundle;
     /**
      * Activity非正常销毁之后
      * 用onCreate
@@ -44,16 +41,16 @@ public class SeemsgActivity extends BaseActivity implements IMsgView {
         msgTitel = (TextView) findViewById(R.id.msgTitel);
         msgText = (TextView) findViewById(R.id.msgText);
         map = (WebView) findViewById(R.id.map);
-        intent= getIntent();
-        msgTitel.setText(intent.getStringExtra("title"));
-        msgText.setText(intent.getStringExtra("content"));
+        bundle=getIntent().getExtras();
+        msgTitel.setText(bundle.getString("title"));
+        msgText.setText(bundle.getString("content"));
     }
 
     // 初始化公共头部
     @Override
     public void setHeader() {
         super.setHeader();
-        title.setText(intent.getStringExtra("title"));
+        title.setText(bundle.getString("title"));
     }
 
     @Override

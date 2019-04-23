@@ -486,7 +486,7 @@ public class OkHttpUtil {
                     String result = response.body().string(); //方法只能调用一次
                     EBLog.i(TAG, result);
                     if (sessionid == "") {
-                        Headers headers = response.headers();//response为okhttp请求后的响应
+                        Headers headers = response.headers();//获取响应头
                         List cookies = headers.values("Set-Cookie");
                         String session = (String) cookies.get(0);
                         sessionid = session.substring(0, session.indexOf(";"));
@@ -505,7 +505,7 @@ public class OkHttpUtil {
                         resData = ((ListBaseResp<T>) res).getData();//json数据中data数据对象
                         code = ((ListBaseResp) res).getstatus();
                     }
-                    if (res != null && res instanceof BaseResp) {
+                    if (res != null) {
                         switch (code) {
                             case 0://success
                                 postSucessMsg(resData);//返回json中 data数据对象

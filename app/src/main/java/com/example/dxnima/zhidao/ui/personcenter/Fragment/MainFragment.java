@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.example.dxnima.zhidao.R;
 import com.example.dxnima.zhidao.bean.table.Msg;
 import com.example.dxnima.zhidao.biz.personcenter.MsgPresenter;
-import com.example.dxnima.zhidao.ui.listView.Data;
-import com.example.dxnima.zhidao.ui.listView.MyAdapter;
-import com.example.dxnima.zhidao.ui.personcenter.Activity.SeemsgActivity;
+import com.example.dxnima.zhidao.ui.personcenter.Activity.AllmsgActivity;
+import com.example.dxnima.zhidao.view.MyAdapter;
+import com.example.dxnima.zhidao.view.MyListViewData;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,20 +34,26 @@ public class MainFragment extends Fragment {
     private ListView listMsg;
     private TextView txt_empty;
     private MyAdapter mAdapter = null;
-    private List<Data> mData = null;
+    private List<MyListViewData> mData = null;
     private List<Msg> msgList=null;
     private Msg msg;
     private MsgPresenter msgPresenter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //listview初始化
+        mData = new LinkedList<MyListViewData>();
+        mAdapter = new MyAdapter((LinkedList<MyListViewData>) mData,getActivity());
+    }
+
     //创造View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
         searchView=(SearchView) view.findViewById(R.id.searchView);
-        listMsg=(ListView) view.findViewById(R.id.listMsg);
+        listMsg=(ListView) view.findViewById(R.id.listSubject);
         txt_empty=(TextView) view.findViewById(R.id.text_empty);
-        //listview初始化
-        mData = new LinkedList<Data>();
-        mAdapter = new MyAdapter((LinkedList<Data>) mData,getActivity());
         initData();
         bindViews();
         return view;
@@ -61,12 +67,7 @@ public class MainFragment extends Fragment {
             listMsg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Data data=mData.get(position);
-                    Msg msgdata=msgList.get(position);
-                    Intent intent = new Intent(getActivity().getApplicationContext(), SeemsgActivity.class);
-                    intent.putExtra("title", data.getTitle());
-                    intent.putExtra("endtime", data.getEndtime());
-                    intent.putExtra("content",msgdata.getContent());
+                    Intent intent = new Intent(getActivity().getApplicationContext(), AllmsgActivity.class);//跳转到消息界面
                     startActivity(intent);
                 }
             });
@@ -74,19 +75,15 @@ public class MainFragment extends Fragment {
         super.onStart();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void bindViews() {
         listMsg.setAdapter(mAdapter);
-        txt_empty.setText("暂无通知~");
+        txt_empty.setText("暂无主题~");
+
         listMsg.setEmptyView(txt_empty);
     }
 
     //修改某一行的list数据
-    private void updateListItem(int postion,Data mData){
+    private void updateListItem(int postion,MyListViewData mData){
         int visiblePosition = listMsg.getFirstVisiblePosition();
         View v = listMsg.getChildAt(postion - visiblePosition);
         ImageView msgimage = (ImageView) v.findViewById(R.id.list_msgimage);
@@ -99,11 +96,13 @@ public class MainFragment extends Fragment {
 
     //添加list数据
     public void initData() {
-        if (msgList==null) return;
-        else
-        for (int i = 0; i < msgList.size(); i++) {
-            msg = msgList.get(i);
-            mAdapter.add(new Data(R.drawable.xingxing, msg.getTitle(), msg.getEndtime()));
-        }
+//        msgList=msgPresenter.msgList;
+//        if (msgList==null) return;
+//        else
+//        for (int i = 0; i < msgList.size(); i++) {
+//            msg = msgList.get(i);
+//            mAdapter.add(new MyListViewData(R.drawable.xingxing, msg.getTitle(), msg.getEndtime()));
+//        }
+        mAdapter.add(new MyListViewData(R.drawable.xingxing,"考试","类别：","学习"));
     }
 }

@@ -35,6 +35,8 @@
         </activity>
         <activity android:name=".ui.personcenter.Activity.SeemsgActivity">
         </activity>
+        <activity android:name=".ui.personcenter.Activity.AllmsgActivity">
+        </activity>
     </application>
 
 </manifest>

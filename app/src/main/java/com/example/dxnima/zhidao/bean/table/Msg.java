@@ -17,17 +17,23 @@ public class Msg extends ListBaseResp<Msg> {
 
     private String endtime;
 
-    private String creatTime;
-
-    private String code;
+    private String creattime;
 
     private String location;
 
     private String filepath;
 
-    private Integer userid;
-
     private String content;
+
+    private Integer subid;
+
+    public Integer getSubid() {
+        return this.subid;
+    }
+
+    public void setSubid(Integer subid) {
+        this.subid = subid;
+    }
 
     public String getContent() {
         return this.content;
@@ -35,14 +41,6 @@ public class Msg extends ListBaseResp<Msg> {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Integer getUserid() {
-        return this.userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
     }
 
     public String getFilepath() {
@@ -61,20 +59,12 @@ public class Msg extends ListBaseResp<Msg> {
         this.location = location;
     }
 
-    public String getCode() {
-        return this.code;
+    public String getCreattime() {
+        return this.creattime;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCreatTime() {
-        return this.creatTime;
-    }
-
-    public void setCreatTime(String creatTime) {
-        this.creatTime = creatTime;
+    public void setCreattime(String creattime) {
+        this.creattime = creattime;
     }
 
     public String getEndtime() {
@@ -101,24 +91,21 @@ public class Msg extends ListBaseResp<Msg> {
         this.msgid = msgid;
     }
 
-    @Generated(hash = 1239569003)
-    public Msg(Integer msgid, String title, String endtime, String creatTime,
-            String code, String location, String filepath, Integer userid,
-            String content) {
+    @Generated(hash = 882773778)
+    public Msg(Integer msgid, String title, String endtime, String creattime,
+            String location, String filepath, String content, Integer subid) {
         this.msgid = msgid;
         this.title = title;
         this.endtime = endtime;
-        this.creatTime = creatTime;
-        this.code = code;
+        this.creattime = creattime;
         this.location = location;
         this.filepath = filepath;
-        this.userid = userid;
         this.content = content;
+        this.subid = subid;
     }
 
     @Generated(hash = 23037457)
     public Msg() {
     }
-
 
 }
